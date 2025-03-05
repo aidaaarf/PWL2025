@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 
 Route::get('/hello', function(){
-    return 'Hello World';
+    return 'Hello Worlds';
 });
 
 Route::get('/world', function(){
