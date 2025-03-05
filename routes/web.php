@@ -38,6 +38,7 @@ Route::get('/user/{name}', function($name){
     return 'Nama Saya '. $name;
 });
 
+
 Route::get('/posts/{post}/comments/{comment}', function
 ($postId, $commentId){
     return 'Pos ke-'. $postId." Komentar ke-: ".$commentId;
@@ -56,3 +57,57 @@ Route::get('/user/{name?}', function($name=null){
 Route::get('/user/{name?}', function($name='John'){
     return 'Nama Saya '. $name;
 });
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+Route::get('/user/profile', function() {
+    //
+})->name('profile');
+
+Route::get(
+    '/user/profile', 
+    [UserProfilController::class, 'show']
+)->name('profile'); 
+
+// Generating URLs...
+$url = route('profile');
+// Generating Redirects...
+return redirect()->route('profile');
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+// ROUTE GROUP DAN ROUTE PREFIXES
+Route::middleware(['first', 'second'])->group(function ()
+{  Route::get('/', function() {
+        // Uses first & second middleware...
+    }); 
+
+Route::get('/user/profile', function(){
+     // Uses first & second middleware...
+    }); 
+});
+
+Route:: domain('{account} .example.com') ->group (function ()
+{Route:: get ('user/{id}', function ($account, $id) { //
+});
+});
+
+Route::middleware('auth')->group (function () {
+Route::get('/user', [UserController::class, 'index']);
+Route::get('/post', [PostController:: class, 'index']);
+Route::get('/event', [EventController::class,'index']);
+});
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+// ROUTE PREFIXES
+Route::prefix('admin')->group (function (){
+    Route::get('/user',[UserController::class, 'index']);
+    Route::get('/post',[PostController::class, 'index']);
+    Route::get ('/event', [EventController::class,
+    'index' ]);
+});
+
+// REDIRECT ROUTES
+Route::view('/here', '/there');
+
+// VIEW ROUTES
+Route::redirect('/welcome', '/welcome');
+Route::redirect('/welcome', '/welcome', ['name' => 'Taylor']);
