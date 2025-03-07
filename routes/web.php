@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArticleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,10 +49,15 @@ Route::get('/posts/{post}/comments/{comment}', function
     return 'Pos ke-'. $postId." Komentar ke-: ".$commentId;
 });
 
-Route::get('/articles/{id}', function
-($articleId){
-    return 'Halaman Artikel dengan ID '. $articleId;
-});
+// Route::get('/articles/{id}', function
+// ($articleId){
+//     return 'Halaman Artikel dengan ID '. $articleId;
+// });
+
+Route::get('/articles/{id}', [PageController::class, 'showArticle']);
+
+Route::get('/resources', [PageController::class, 'index']);
+Route::get('/resources', [PageController::class, 'about']);
 
 Route::get('/user/{name?}', function($name=null){
     return 'Nama Saya '. $name;
@@ -69,9 +79,9 @@ Route::get(
 )->name('profile'); 
 
 // Generating URLs...
-$url = route('profile');
+// $url = route('profile');
 // Generating Redirects...
-return redirect()->route('profile');
+// return redirect()->route('profile');
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 // ROUTE GROUP DAN ROUTE PREFIXES
@@ -111,3 +121,12 @@ Route::view('/here', '/there');
 // VIEW ROUTES
 Route::redirect('/welcome', '/welcome');
 Route::redirect('/welcome', '/welcome', ['name' => 'Taylor']);
+
+//
+Route::get('/hello', [WelcomeController::class, 'hello']);
+
+//
+
+Route::get('/', HomeController::class);
+Route::get('/about', AboutController::class);
+Route::get('/article/{articleId}', ArticleController::class);
