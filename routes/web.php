@@ -139,3 +139,14 @@ Route::resource('photos', PhotoController::class);
 //
 Route::resource('photos', PhotoController::class)->only(['index', 'show']);
 Route::resource('photos', PhotoController::class)->only(['create', 'store', 'update', 'destroy']);
+
+// praktikum 3
+// Route::get('/greeting', function () { 
+//     return view('hello', ['name' => 'Aida']); 
+//     });
+    
+// Route::get('/greeting', function () {
+//     return view('blog.hello', ['name' => 'Aida']);
+//     });
+
+Route::get('/greeting', [WelcomeController::class, 'greeting']);
