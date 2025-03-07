@@ -2,9 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\PhotoController;
+
 
 
 /*
@@ -73,47 +76,46 @@ Route::get('/user/profile', function() {
     //
 })->name('profile');
 
-Route::get(
-    '/user/profile', 
-    [UserProfilController::class, 'show']
-)->name('profile'); 
+// Route::get(
+//     '/user/profile', 
+//     [UserProfilController::class, 'show']
+// )->name('profile'); 
 
 // Generating URLs...
 // $url = route('profile');
-// Generating Redirects...
 // return redirect()->route('profile');
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 // ROUTE GROUP DAN ROUTE PREFIXES
-Route::middleware(['first', 'second'])->group(function ()
-{  Route::get('/', function() {
-        // Uses first & second middleware...
-    }); 
+// Route::middleware(['first', 'second'])->group(function ()
+// {  Route::get('/', function() {
+//         // Uses first & second middleware...
+//     }); 
 
-Route::get('/user/profile', function(){
-     // Uses first & second middleware...
-    }); 
-});
+// Route::get('/user/profile', function(){
+//      // Uses first & second middleware...
+//     }); 
+// });
 
-Route:: domain('{account} .example.com') ->group (function ()
-{Route:: get ('user/{id}', function ($account, $id) { //
-});
-});
+// Route:: domain('{account} .example.com') ->group (function ()
+// {Route:: get ('user/{id}', function ($account, $id) { //
+// });
+// });
 
-Route::middleware('auth')->group (function () {
-Route::get('/user', [UserController::class, 'index']);
-Route::get('/post', [PostController:: class, 'index']);
-Route::get('/event', [EventController::class,'index']);
-});
+// Route::middleware('auth')->group (function () {
+// // Route::get('/user', [UserController::class, 'index']);
+// Route::get('/post', [PostController:: class, 'index']);
+// Route::get('/event', [EventController::class,'index']);
+// });
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 // ROUTE PREFIXES
-Route::prefix('admin')->group (function (){
-    Route::get('/user',[UserController::class, 'index']);
-    Route::get('/post',[PostController::class, 'index']);
-    Route::get ('/event', [EventController::class,
-    'index' ]);
-});
+// Route::prefix('admin')->group (function (){
+//     // Route::get('/user',[UserController::class, 'index']);
+//     Route::get('/post',[PostController::class, 'index']);
+//     Route::get ('/event', [EventController::class,
+//     'index' ]);
+// });
 
 // REDIRECT ROUTES
 Route::view('/here', '/there');
@@ -130,3 +132,10 @@ Route::get('/hello', [WelcomeController::class, 'hello']);
 Route::get('/', HomeController::class);
 Route::get('/about', AboutController::class);
 Route::get('/article/{articleId}', ArticleController::class);
+
+// PhotoController
+Route::resource('photos', PhotoController::class);
+
+//
+Route::resource('photos', PhotoController::class)->only(['index', 'show']);
+Route::resource('photos', PhotoController::class)->only(['create', 'store', 'update', 'destroy']);
